@@ -1,89 +1,126 @@
-"use client"
+import { useEffect, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
-import { useState, useEffect } from "react"
-import { Search, Menu, X } from "lucide-react"
+const navLinks = [
+  { name: "Home", href: "#home" },
+  { name: "At a Glance", href: "#glance" },
+  { name: "Destinations", href: "#destinations" },
+  { name: "Circuits", href: "#tours" },
+  { name: "Highlights", href: "#news" },
+  { name: "ESG", href: "#esg" },
+  { name: "Contact", href: "#contact" },
+];
 
-export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setScrolled(window.scrollY > 20);
+    };
 
-  const navItems = ["Our Company", "Our Brands", "Investors", "Careers", "News", "ESG"]
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-lg" : "bg-transparent"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || open
+          ? "border-b border-white/40 bg-[rgba(245,240,232,0.92)] shadow-[0_12px_35px_rgba(15,38,31,0.12)] backdrop-blur-xl"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <img src="/travel-leisure-co-logo.jpg" alt="Travel + Leisure Co." className="h-8 w-auto" />
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="#home" className="flex items-center gap-3">
+          <img
+            src="/assets/JSDC-BODY.png"
+            alt="Government of Jharkhand"
+            className="h-11 w-11 rounded-full shadow-[0_10px_25px_rgba(14,90,70,0.25)]"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextElementSibling.style.display = 'flex';
+            }}
+          />
+          <span 
+            className="hidden h-11 w-11 items-center justify-center rounded-full bg-[color:var(--forest)] text-xs font-bold text-white shadow-[0_10px_25px_rgba(14,90,70,0.25)]"
+            title="Government of Jharkhand"
+          >
+            ★
+          </span>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[color:var(--forest)]">
+              Tourism Showcase
+            </p>
+            <p className="font-heading text-lg text-[color:var(--ink)]">
+              Innovate Jharkhand
+            </p>
           </div>
+        </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    isScrolled ? "text-gray-700 hover:text-blue-600" : "text-white hover:text-blue-200"
-                  }`}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Search and Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <button
-              className={`p-2 rounded-md transition-colors duration-200 ${
-                isScrolled ? "text-gray-700 hover:text-blue-600" : "text-white hover:text-blue-200"
-              }`}
+        <nav className="hidden items-center gap-6 lg:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-sm font-medium text-[color:var(--ink-soft)] transition-colors duration-200 hover:text-[color:var(--forest)]"
             >
-              <Search className="h-5 w-5" />
-            </button>
+              {link.name}
+            </a>
+          ))}
+        </nav>
 
-            <button
-              className={`md:hidden p-2 rounded-md transition-colors duration-200 ${
-                isScrolled ? "text-gray-700 hover:text-blue-600" : "text-white hover:text-blue-200"
-              }`}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--forest)] bg-[color:var(--forest)] px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            Plan a Visit
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white shadow-lg rounded-lg mt-2 py-2">
-            {navItems.map((item) => (
+        <button
+          type="button"
+          className="rounded-full border border-[rgba(27,29,19,0.12)] bg-white/60 p-2 text-[color:var(--ink)] lg:hidden"
+          onClick={() => setOpen((current) => !current)}
+          aria-label={open ? "Close menu" : "Open menu"}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="border-t border-[rgba(27,29,19,0.08)] bg-[rgba(245,240,232,0.97)] px-6 pb-6 pt-4 lg:hidden">
+          <nav className="flex flex-col gap-3">
+            {navLinks.map((link) => (
               <a
-                key={item}
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600"
-                onClick={() => setIsMobileMenuOpen(false)}
+                key={link.name}
+                href={link.href}
+                className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--ink)] transition-colors duration-200 hover:bg-white/80 hover:text-[color:var(--forest)]"
+                onClick={() => setOpen(false)}
               >
-                {item}
+                {link.name}
               </a>
             ))}
-          </div>
-        )}
-      </div>
-    </nav>
-  )
-}
+            <a
+              href="#contact"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-[color:var(--forest)] px-4 py-3 text-sm font-semibold text-white"
+              onClick={() => setOpen(false)}
+            >
+              Plan a Visit
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Navbar;

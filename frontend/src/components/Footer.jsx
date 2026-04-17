@@ -1,98 +1,107 @@
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 
-export default function Footer() {
-  const footerSections = [
-    {
-      title: "Our Company",
-      links: ["About Us", "Leadership", "Careers", "Investor Relations", "News"],
-    },
-    {
-      title: "Our Brands",
-      links: ["Wyndham Destinations", "Panorama", "Travel + Leisure GO", "Extra Holidays", "Hoseasons"],
-    },
-    {
-      title: "Resources",
-      links: ["Customer Service", "Owner Services", "Travel Planning", "Sustainability", "Privacy Policy"],
-    },
-    {
-      title: "Connect",
-      links: ["Contact Us", "Locations", "Partner With Us", "Affiliate Program", "Media Kit"],
-    },
-  ]
+const footerSections = [
+  {
+    title: "Explore",
+    links: [
+      { label: "At a Glance", href: "#glance" },
+      { label: "Destinations", href: "#destinations" },
+      { label: "Circuits", href: "#tours" },
+    ],
+  },
+  {
+    title: "Project Flow",
+    links: [
+      { label: "Highlights", href: "#news" },
+      { label: "ESG", href: "#esg" },
+      { label: "Contact", href: "#contact" },
+    ],
+  },
+  {
+    title: "Use Cases",
+    links: [
+      { label: "Tourism pitch", href: "#home" },
+      { label: "Student demo", href: "#stats" },
+      { label: "Campaign concept", href: "#contact" },
+    ],
+  },
+];
 
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-  ]
+const socialLinks = [
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Youtube, href: "#", label: "YouTube" },
+];
 
+const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          {/* Logo and Description */}
-          <div className="lg:col-span-1">
-            <img src="/travel-leisure-co-logo-white.jpg" alt="Travel + Leisure Co." className="h-8 w-auto mb-4" />
-            <p className="text-gray-400 text-sm leading-relaxed">
-              The world's leading membership and leisure travel company, with a portfolio of nearly 20 resort, travel
-              club, and lifestyle travel brands.
+    <footer className="bg-[#0d1714] text-white">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.1fr_1.6fr]">
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--forest)] text-sm font-semibold uppercase tracking-[0.3em] text-white">
+                IJ
+              </span>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[color:var(--sun)]">
+                  Final project
+                </p>
+                <p className="font-heading text-2xl">Innovate Jharkhand</p>
+              </div>
+            </div>
+            <p className="mt-5 max-w-md text-sm leading-7 text-white/68">
+              A complete tourism storytelling experience designed to stay aligned
+              across inspiration, destinations, planning and responsible travel.
             </p>
           </div>
 
-          {/* Footer Links */}
-          {footerSections.map((section, index) => (
-            <div key={index}>
-              <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
-              <ul className="space-y-2">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                      {link}
+          <div className="grid gap-8 sm:grid-cols-3">
+            {footerSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-[color:var(--sun)]">
+                  {section.title}
+                </h3>
+                <div className="mt-5 space-y-3">
+                  {section.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="block text-sm text-white/72 transition-colors duration-200 hover:text-white"
+                    >
+                      {link.label}
                     </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Social Links */}
-        <div className="border-t border-gray-800 pt-8 mb-8">
-          <div className="flex justify-center space-x-6">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.href}
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-                aria-label={social.label}
-              >
-                <social.icon className="h-6 w-6" />
-              </a>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom Footer */}
-        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p>&copy; 2024 Travel + Leisure Co. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <a href="#" className="hover:text-white transition-colors duration-200">
-                Terms of Service
+        <div className="flex flex-col gap-5 pt-8 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-white/55">
+            &copy; {new Date().getFullYear()} Innovate Jharkhand. Crafted as a
+            polished end-to-end tourism project.
+          </p>
+
+          <div className="flex items-center gap-4">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-colors duration-200 hover:text-white"
+              >
+                <social.icon className="h-4 w-4" />
               </a>
-              <a href="#" className="hover:text-white transition-colors duration-200">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-white transition-colors duration-200">
-                Cookie Policy
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
+
+export default Footer;

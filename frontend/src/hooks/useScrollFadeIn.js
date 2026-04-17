@@ -1,28 +1,34 @@
-"use client"
+import { useEffect } from "react";
 
-import { useEffect } from "react"
-
-export default function useScrollFadeIn() {
+const useScrollFadeIn = () => {
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
+    const elements = document.querySelectorAll("[data-reveal]");
+
+    if (!elements.length) {
+      return undefined;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fade-in-up")
-        }
-      })
-    }, observerOptions)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
 
-    // Observe all elements with fade-in classes
-    const elementsToObserve = document.querySelectorAll(".fade-in-up, .slide-in-left, .slide-in-right")
-    elementsToObserve.forEach((el) => observer.observe(el))
+    elements.forEach((element) => observer.observe(element));
 
     return () => {
-      elementsToObserve.forEach((el) => observer.unobserve(el))
-    }
-  }, [])
-}
+      observer.disconnect();
+    };
+  }, []);
+};
+
+export default useScrollFadeIn;
