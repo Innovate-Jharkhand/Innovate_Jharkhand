@@ -4,6 +4,6 @@
   "description": "Innovate Jharkhand - Tourism Showcase Platform",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }
