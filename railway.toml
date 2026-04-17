@@ -1,0 +1,8 @@
+[build]
+builder = "dockerfile"
+
+[build.docker]
+dockerfile = "./backend/Dockerfile"
+
+[deploy]
+port = 5000
